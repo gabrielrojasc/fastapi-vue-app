@@ -4,10 +4,6 @@ import VuexPersistence from "vuex-persist";
 import notes from "./modules/notes";
 import users from "./modules/users";
 
-const vuexLocal = new VuexPersistence({
-  storage: window.localStorage,
-});
-
 export default createStore({
   state: {},
   getters: {},
@@ -17,5 +13,5 @@ export default createStore({
     notes: notes,
     users: users,
   },
-  plugins: [vuexLocal.plugin],
+  plugins: [new VuexPersistence().plugin],
 });

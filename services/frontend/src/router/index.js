@@ -1,4 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
+
+import store from "@/store";
+
 import HomeView from "@/views/HomeView.vue";
 import RegisterView from "@/views/RegisterView";
 import LoginView from "@/views/LoginView";
@@ -54,6 +57,18 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (store.getters.isAuthenticated) {
+      next();
+      return;
+    }
+    next("/login");
+  } else {
+    next();
+  }
 });
 
 export default router;
